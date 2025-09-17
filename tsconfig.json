@@ -19,7 +19,7 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "@/auth/*": ["./src/auth/*"],
-      "@/prisma/*": ["./src/prisma/*"],
+      "@/prisma/*": ["src/common/prisma/*"],
       "@/common/*": ["./src/common/*"]
     }
   },

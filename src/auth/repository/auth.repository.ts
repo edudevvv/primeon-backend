@@ -5,7 +5,7 @@ import { JwtService } from "@nestjs/jwt";
 import { compareSync, hashSync } from "bcryptjs";
 
 import { AuthDto } from "../dto/auth.dto";
-import { PrismaService } from "@/prisma/prisma.service";
+import { PrismaService } from "@/common/prisma/prisma.service";
 
 @Injectable()
 export class AuthRepository { 
