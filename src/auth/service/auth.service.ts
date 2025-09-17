@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 
 import { AuthDto } from "../dto/auth.dto";
-import { AuthMessages } from "../../common/constants/auth.messages";
+import { AuthMessages } from "../../common/constants/messages";
 import { AuthRepository } from "../repository/auth.repository";
 
 @Injectable()
@@ -10,7 +10,7 @@ export class AuthService {
     private repository: AuthRepository
   ) {}
 
-  async handleAuthRegister(data: AuthDto) {
+  public async handleAuthRegister(data: AuthDto) {
     try { 
       const findUser: object | null = await this.repository.findByEmail(data.email);
       if (findUser) return AuthMessages.USER_ALREADY_EXISTS;
@@ -22,7 +22,7 @@ export class AuthService {
     }
   }
 
-  async handleAuthLogin(data: AuthDto) {
+  public async handleAuthLogin(data: AuthDto) {
     try { 
       const findUser: object | null = await this.repository.findByEmail(data.email);
       if (!findUser) return AuthMessages.USER_NOT_EXISTS;
@@ -36,7 +36,7 @@ export class AuthService {
     }
   }
 
-  async handleMe(id: string) {
+  public async handleMe(id: string) {
     try {
       const findUser: object | null = await this.repository.findById(id);
       if (!findUser) return AuthMessages.USER_NOT_EXISTS;

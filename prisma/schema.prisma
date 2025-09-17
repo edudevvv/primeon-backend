@@ -20,6 +20,7 @@ model Users {
   passwordHashed String @map("password_hashed")
 
   apps Applications[] @relation(name: "ownerRelation")
+  appsLimit Int @default(2) @map("apps_limit")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime? @map("updated_at")
@@ -33,10 +34,10 @@ model Applications {
 
   name String
   type ApplicationType
-  config ApplicationConfig? @relation(name: "configRelation")
+  config ApplicationConfig?
 
   owner Users @relation(name: "ownerRelation", fields: [ownerId], references: [id])
-  ownerId String @unique @map("owner_id")
+  ownerId String @map("owner_id")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime? @map("updated_at")
@@ -52,9 +53,9 @@ model ApplicationConfig {
   wabaNumber String @map("waba_phone")
   wabaToken String? @map("waba_account_token")
 
-  application Applications @relation(name: "configRelation", fields: [applicationId], references: [id])
+  application Applications @relation(fields: [applicationId], references: [id])
   applicationId String @unique @map("application_id")
-
+  
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime? @map("updated_at")
   deletedAt DateTime? @map("deleted_at")

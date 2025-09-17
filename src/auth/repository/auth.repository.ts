@@ -5,7 +5,7 @@ import { JwtService } from "@nestjs/jwt";
 import { compareSync, hashSync } from "bcryptjs";
 
 import { AuthDto } from "../dto/auth.dto";
-import { PrismaService } from "@/common/prisma/prisma.service";
+import { PrismaService } from "../../common/prisma/prisma.service";
 
 @Injectable()
 export class AuthRepository { 
@@ -17,9 +17,7 @@ export class AuthRepository {
   public async findByEmail(email: string) { 
     try { 
       const user: object | null = await this.prisma.users.findUnique({ where: { email }, omit: { deletedAt: true } });
-
-      if (user) return user;
-      else return null;
+      return user;
     } catch {  
       return null;
     }
@@ -35,8 +33,7 @@ export class AuthRepository {
         } 
       });
 
-      if (user) return user;
-      else return null;
+      return user;
     } catch {  
       return null;
     }

@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Post, Request, UseGuards } from "@nestjs/common";
+import { Throttle } from "@nestjs/throttler";
 
 import { AuthDto } from "./dto/auth.dto";
 import { AuthService } from "./service/auth.service";
@@ -11,18 +12,21 @@ export class AuthController {
   ) {}
 
   @Post("register")
-  async handleRegister(@Body() data: AuthDto) { 
+  @Throttle({ default: { limit: 2, ttl: 60000 } })
+  public async handleRegister(@Body() data: AuthDto) { 
     return this.service.handleAuthRegister(data);
   }
 
   @Post("login")
-  async handleLogin(@Body() data: AuthDto) {
+  @Throttle({ default: { limit: 4, ttl: 60000 } })
+  public async handleLogin(@Body() data: AuthDto) {
     return this.service.handleAuthLogin(data);
   }
 
   @Get("me") 
   @UseGuards(JwtAuthGuard)
-  async handleMe(@Request() req: any) {
+  @Throttle({ default: { limit: 3, ttl: 60000 } })
+  public async handleMe(@Request() req: any) {
     return this.service.handleMe(req.user.userId);
   }
 }

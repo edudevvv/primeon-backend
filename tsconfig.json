@@ -17,11 +17,7 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
-    "paths": {
-      "@/auth/*": ["./src/auth/*"],
-      "@/prisma/*": ["src/common/prisma/*"],
-      "@/common/*": ["./src/common/*"]
-    }
+    "paths": {}
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]
