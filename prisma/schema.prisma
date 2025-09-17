@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ApplicationType { 
+  WABA
+  BALLEYS
+}
+
+model Users { 
+  id String @id @default(uuid())
+
+  email String @unique
+  passwordHashed String @map("password_hashed")
+
+  apps Applications[] @relation(name: "ownerRelation")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime? @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@map("users")
+}
+
+model Applications {
+  id String @id @default(uuid())
+
+  name String
+  type ApplicationType
+  config ApplicationConfig? @relation(name: "configRelation")
+
+  owner Users @relation(name: "ownerRelation", fields: [ownerId], references: [id])
+  ownerId String @unique @map("owner_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime? @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@map("applications")
+}
+
+model ApplicationConfig { 
+  id String @id @default(uuid())
+
+  wabaId String? @map("waba_phone_id")
+  wabaNumber String @map("waba_phone")
+  wabaToken String? @map("waba_account_token")
+
+  application Applications @relation(name: "configRelation", fields: [applicationId], references: [id])
+  applicationId String @unique @map("application_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime? @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@map("application_config")
+}
