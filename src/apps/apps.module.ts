@@ -5,10 +5,11 @@ import { PrismaService } from "../common/prisma/prisma.service";
 
 import { AppsRepository } from "./repository/apps.repository";
 import { AppService } from "./service/apps.service";
+import { WhatsAppService } from "src/whatsapp/whatsapp.service";
 
 @Module({ 
   controllers: [AppsController],
-  providers: [AppsRepository, AppService, PrismaService]
+  providers: [AppsRepository, AppService, PrismaService, WhatsAppService]
 })
 
 export class AppsModule {}

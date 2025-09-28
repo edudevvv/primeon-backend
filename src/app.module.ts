@@ -4,6 +4,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
 import { AuthModule } from './auth/auth.module';
 import { AppsModule } from './apps/apps.module';
 import { WebhookModule } from './webhook/webhook.module';
+import { FlowsModule } from './flows/flows.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { WebhookModule } from './webhook/webhook.module';
     }]),
     AuthModule, 
     AppsModule,
+    FlowsModule,
     WebhookModule
   ]
 })

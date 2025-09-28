@@ -35,6 +35,7 @@ model Applications {
   name String
   type ApplicationType
   config ApplicationConfig?
+  steps StepsFlow[]
 
   owner Users @relation(name: "ownerRelation", fields: [ownerId], references: [id])
   ownerId String @map("owner_id")
@@ -61,4 +62,21 @@ model ApplicationConfig {
   deletedAt DateTime? @map("deleted_at")
 
   @@map("application_config")
+}
+
+model StepsFlow { 
+  id String @id @default(uuid())
+
+  name String
+  message Json[]
+
+  isInitial Boolean @default(false) @map("is_initial")
+  capture Boolean @default(false)
+  
+  steps Json[]
+  
+  application Applications @relation(fields: [applicationId], references: [id])
+  applicationId String @map("application_id")
+  
+  @@map("steps_flow")
 }

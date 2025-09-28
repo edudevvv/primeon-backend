@@ -3,11 +3,13 @@ import { Injectable } from "@nestjs/common";
 import { AppsCreateDto } from "../dto/apps.dto";
 import { AuthMessages, AppsMessages } from "../../common/constants/messages";
 import { PrismaService } from "../../common/prisma/prisma.service";
+import { WhatsAppService } from "../../whatsapp/whatsapp.service";
 
 @Injectable()
 export class AppsRepository { 
   constructor (
-    private prisma: PrismaService
+    private prisma: PrismaService,
+    private whatsapp: WhatsAppService
   ) {}
 
   private async findUserById(id: string) {
@@ -118,5 +120,18 @@ export class AppsRepository {
     } catch (e: unknown) { 
       return AppsMessages.INTERNAL_SERVER_ERROR;
     }
+  }
+
+  public async updateApplication(data: any) {
+    try { 
+      const { wabaId, wabaToken } = data;
+
+      const response = await this.whatsapp.validateToken(wabaToken);
+      if (!response) return AppsMessages.TOKEN_INVALID;
+      console.log(response)
+    } catch (e: unknown) { 
+      return null;
+    }
+    console.log(data)
   }
 }

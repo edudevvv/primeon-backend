@@ -6,6 +6,7 @@ export const AppsMessages = {
   BAD_REQUEST: "Invalid request. Please check the submitted data.",
   INVALID_APPLICATION: "Application not exists.",
   APPLICATION_DELETED_SUCCESSFULLY: "Application deleted successfully.",
+  TOKEN_INVALID: "Application token is invalid.",
   RATE_LIMIT: "Too many requests in a short period. Please try again later.",
 };
 

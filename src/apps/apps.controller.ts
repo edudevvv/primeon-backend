@@ -1,6 +1,6 @@
-import { Body, Controller, Delete, Get, Param, Post, Request, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put, Request, UseGuards } from "@nestjs/common";
 
-import { AppsCreateDto } from "./dto/apps.dto";
+import { AppsCreateDto, AppsUpdateDto } from "./dto/apps.dto";
 import { AppService } from "./service/apps.service";
 import { JwtAuthGuard } from "../auth/guards/auth.guard";
 
@@ -12,7 +12,10 @@ export class AppsController {
   ) {}
 
   @Post("create")
-  public async handleCreateApplication(@Body() data: AppsCreateDto, @Request() req: any) {
+  public async handleCreateApplication(
+    @Body() data: AppsCreateDto, 
+    @Request() req: any
+  ) {
     return this.service.createApplication(data, req.user.userId);
   }
 
@@ -21,8 +24,13 @@ export class AppsController {
     return this.service.listApplications(req.user.userId);
   }
 
-  @Delete('/:appId')
+  @Delete(":appId")
   public async handleDeleteApplication(@Param('appId') appId: string, @Request() req: any) {
     return this.service.deleteApplication(req.user.userId, appId);
+  }
+
+  @Put(":appId/config")
+  async handleUpdateApplication(@Body() data: AppsUpdateDto) {
+    return this.service.updateApplication(data);
   }
 }

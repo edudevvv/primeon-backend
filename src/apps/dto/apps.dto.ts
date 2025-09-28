@@ -10,3 +10,11 @@ export class AppsCreateDto {
   @IsString() @IsNotEmpty()
   number: string;
 }
+
+export class AppsUpdateDto {
+  @IsString()
+  wabaId: string;
+  
+  @IsString() @IsNotEmpty()
+  wabaToken: string;
+}

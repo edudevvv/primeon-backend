@@ -20,4 +20,8 @@ export class AppService {
   public async deleteApplication(userId: string, appId: string) {
     return this.repository.deleteApplication(userId, appId);
   }
+
+  public async updateApplication(data: any) { 
+    return this.repository.updateApplication(data);
+  }
 }
